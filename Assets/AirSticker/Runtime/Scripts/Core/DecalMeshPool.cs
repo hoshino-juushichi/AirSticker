@@ -98,9 +98,9 @@ namespace AirSticker.Runtime.Scripts.Core
         /// <summary>
         ///     Calculate the hash value to be registered in the pool
         /// </summary>
-        public static int CalculateHash(GameObject receiverObject, Renderer renderer, Material decalMaterial)
+        public static int CalculateHash(GameObject receiverObject, Renderer renderer, Material decalMaterial, int separateId)
         {
-            var nameKey = $"{receiverObject.name}_{decalMaterial.name}_{renderer.name}";
+            var nameKey = $"{receiverObject.name}_{decalMaterial.name}_{renderer.name}_{separateId}";
             return nameKey.GetHashCode();
         }
     }

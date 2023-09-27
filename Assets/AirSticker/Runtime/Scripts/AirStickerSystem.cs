@@ -99,7 +99,8 @@ namespace AirSticker.Runtime.Scripts
         internal static void CollectEditDecalMeshes(
             List<DecalMesh> results,
             GameObject receiverObject,
-            Material decalMaterial)
+            Material decalMaterial,
+            int separateId)
         {
             // We want to collect only the renderer of receiver objects,
             // But the renderer of decal mesh hanging from receiver object.
@@ -110,7 +111,7 @@ namespace AirSticker.Runtime.Scripts
             {
                 if (!renderer) return;
                 var pool = Instance._decalMeshPool;
-                var hash = DecalMeshPool.CalculateHash(receiverObject, renderer, decalMaterial);
+                var hash = DecalMeshPool.CalculateHash(receiverObject, renderer, decalMaterial, separateId);
                 
                 if (pool.Contains(hash))
                 {

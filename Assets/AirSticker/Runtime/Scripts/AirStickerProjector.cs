@@ -37,6 +37,7 @@ namespace AirSticker.Runtime.Scripts
         [SerializeField] private bool projectionBackside; // This flag indicates whether it is possible to project onto the backside. 
         [Tooltip("When this is checked, the decal projection process is started at the instance is created.")] [SerializeField]
         private bool launchOnAwake; // When an instance is created, the decal projection process also starts automatically.。
+        public int separateId { get; private set; }
 
         [SerializeField] private UnityEvent<State> onFinishedLaunch; //　The event is called when decal projection is finished.
 
@@ -149,7 +150,7 @@ namespace AirSticker.Runtime.Scripts
                 {
                     continue;
                 }
-                AirStickerSystem.CollectEditDecalMeshes(DecalMeshes, receiverObject, decalMaterial);
+                AirStickerSystem.CollectEditDecalMeshes(DecalMeshes, receiverObject, decalMaterial, separateId);
 
                 var skinnedMeshRenderers = receiverObject.GetComponentsInChildren<SkinnedMeshRenderer>();
                 skinnedMeshRenderers = skinnedMeshRenderers.Where(s => s.name != "AirStickerRenderer").ToArray();
@@ -257,6 +258,7 @@ namespace AirSticker.Runtime.Scripts
         ///     If it is false, the decal projection is started by explicitly calling the Launch method.
         /// </param>
         /// <param name="onCompletedLaunch">Callback function called when decal projection is complete.</param>
+        /// <param name="separateId">Specify a different id to explicitly divide the decal mesh</param>
         public static AirStickerProjector CreateAndLaunch(
             GameObject owner,
             GameObject receiverObject,
@@ -265,7 +267,8 @@ namespace AirSticker.Runtime.Scripts
             float height,
             float depth,
             bool launchOnAwake,
-            UnityAction<State> onCompletedLaunch)
+            UnityAction<State> onCompletedLaunch,
+            int separateId = 0)
         {
             var projector = owner.AddComponent<AirStickerProjector>();
             projector.width = width;
@@ -276,6 +279,7 @@ namespace AirSticker.Runtime.Scripts
             projector.decalMaterial = decalMaterial;
             projector.launchOnAwake = false;
             projector.onFinishedLaunch = new UnityEvent<State>();
+            projector.separateId = separateId;
 
             if (launchOnAwake) 
                 projector.Launch(onCompletedLaunch);
