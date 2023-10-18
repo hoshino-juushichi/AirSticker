@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -98,9 +98,9 @@ namespace AirSticker.Runtime.Scripts.Core
         /// <summary>
         ///     Calculate the hash value to be registered in the pool
         /// </summary>
-        public static int CalculateHash(GameObject receiverObject, Component component, Material decalMaterial)
+        public static int CalculateHash(GameObject receiverObject, Component component, Material decalMaterial, int separateId)
         {
-            var nameKey = $"{receiverObject.name}_{decalMaterial.name}_{component.name}";
+            var nameKey = $"{receiverObject.name}_{decalMaterial.name}_{component.name}_{separateId}";
             return nameKey.GetHashCode();
         }
     }

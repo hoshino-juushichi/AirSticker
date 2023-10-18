@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using AirSticker.Runtime.Scripts.Core;
 using UnityEngine;
@@ -101,7 +101,8 @@ namespace AirSticker.Runtime.Scripts
         internal static void CollectEditDecalMeshes(
             List<DecalMesh> results,
             GameObject receiverObject,
-            Material decalMaterial)
+            Material decalMaterial,
+			int separateId)
         {
             // We want to collect only the renderer of receiver objects,
             // But the renderer of decal mesh hanging from receiver object.
@@ -112,7 +113,7 @@ namespace AirSticker.Runtime.Scripts
             {
                 if (!renderer) return;
                 var pool = Instance._decalMeshPool;
-                var hash = DecalMeshPool.CalculateHash(receiverObject, renderer, decalMaterial);
+                var hash = DecalMeshPool.CalculateHash(receiverObject, renderer, decalMaterial, separateId);
 
                 if (pool.Contains(hash))
                 {
@@ -131,7 +132,7 @@ namespace AirSticker.Runtime.Scripts
             {
                 if (!terrain) return;
                 var pool = Instance._decalMeshPool;
-                var hash = DecalMeshPool.CalculateHash(receiverObject, terrain, decalMaterial);
+                var hash = DecalMeshPool.CalculateHash(receiverObject, terrain, decalMaterial, separateId);
 
                 if (pool.Contains(hash))
                 {
